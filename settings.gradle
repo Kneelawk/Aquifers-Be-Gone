@@ -16,5 +16,9 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'MultiLoader'
-include("Common", "Fabric", "Forge")
+rootProject.name = 'aquifersbegone'
+
+include("Common")
+include("Common-1.19.2", "Fabric-1.19.2", "Forge-1.19.2")
+include("Common-1.19.3", "Fabric-1.19.3", "Forge-1.19.3")
+include("Common-1.19.4", "Fabric-1.19.4", "Forge-1.19.4")

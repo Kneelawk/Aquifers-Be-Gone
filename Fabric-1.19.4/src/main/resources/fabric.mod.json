@@ -1,0 +1,38 @@
+{
+    "schemaVersion": 1,
+    "id": "aquifersbegone",
+    "version": "${version}",
+  
+    "name": "Aquifers Be Gone",
+    "description": "Removes small Caves' ability to fill with water.",
+    "authors": [
+      "Kneelawk"
+    ],
+    "contact": {
+      "homepage": "https://github.com/Kneelawk/Aquifers-Be-Gone",
+      "sources": "https://github.com/Kneelawk/Aquifers-Be-Gone"
+    },
+  
+    "license": "MIT",
+    "icon": "assets/modid/icon.png",
+  
+    "environment": "*",
+    "entrypoints": {
+      "main": [
+        "com.kneelawk.aquifersbegone.ABGMod"
+      ]
+    },
+    "mixins": [
+      "aquifersbegone.mixins.json"
+    ],
+  
+    "depends": {
+      "fabricloader": ">=0.14",
+      "fabric": "*",
+      "minecraft": "${minecraft_version_constraint}",
+      "java": ">=17"
+    },
+    "suggests": {
+      "another-mod": "*"
+    }
+  }

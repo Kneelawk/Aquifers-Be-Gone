@@ -4,10 +4,10 @@ plugins {
     id 'maven-publish'
 }
 
-archivesBaseName = "${mod_name}-common-${common_minecraft_version}"
+archivesBaseName = "${mod_name}-common-${minecraft_version}"
 
 minecraft {
-    version(common_minecraft_version)
+    version(minecraft_version)
     runs {
         if (project.hasProperty('common_runs_enabled') ? project.findProperty('common_runs_enabled').toBoolean() : true) {
 
@@ -22,7 +22,10 @@ minecraft {
 }
 
 dependencies {
-    compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
+    compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
+
+    implementation project(":Common")
+
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
 }
 
