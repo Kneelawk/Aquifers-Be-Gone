@@ -58,11 +58,10 @@ public abstract class WorldCarverMixin {
                 }
 
                 if (!state.getFluidState().isEmpty()) {
-                    BlockState newState = state.trySetValue(BlockStateProperties.WATERLOGGED, false);
-                    if (newState == state) {
-                        state = AIR;
+                    if (state.hasProperty(BlockStateProperties.WATERLOGGED)) {
+                        state = state.setValue(BlockStateProperties.WATERLOGGED, false);
                     } else {
-                        state = newState;
+                        state = AIR;
                     }
                 }
 
