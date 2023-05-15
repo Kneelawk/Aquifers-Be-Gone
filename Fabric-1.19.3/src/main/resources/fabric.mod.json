@@ -23,7 +23,7 @@
       ]
     },
     "mixins": [
-      "aquifersbegone.mixins.json"
+      "aquifersbegone.common.mixins.json"
     ],
   
     "depends": {

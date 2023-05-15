@@ -3,15 +3,14 @@ plugins {
     id 'eclipse'
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '5.1.+'
-    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
-archivesBaseName = "${mod_name}-forge-${minecraft_version}"
+archivesBaseName = "${mod_name}-forge-common"
 
 libsDirectory.set(new File(rootProject.buildDir, "libs"))
 
 minecraft {
-    mappings channel: 'official', version: minecraft_version
+    mappings channel: 'official', version: common_minecraft_version
     
     if (project.hasProperty('forge_ats_enabled') && project.findProperty('forge_ats_enabled').toBoolean()) {
         // This location is hardcoded in Forge and can not be changed.
@@ -31,8 +30,6 @@ minecraft {
                 modClientRun {
                     source sourceSets.main
                     source project(":Common").sourceSets.main
-                    source project(":Forge").sourceSets.main
-                    source project(":Common-${minecraft_version}").sourceSets.main
                 }
             }
         }
@@ -47,8 +44,6 @@ minecraft {
                 modServerRun {
                     source sourceSets.main
                     source project(":Common").sourceSets.main
-                    source project(":Forge").sourceSets.main
-                    source project(":Common-${minecraft_version}").sourceSets.main
                 }
             }
         }
@@ -64,8 +59,6 @@ minecraft {
                 modDataRun {
                     source sourceSets.main
                     source project(":Common").sourceSets.main
-                    source project(":Forge").sourceSets.main
-                    source project(":Common-${minecraft_version}").sourceSets.main
                 }
             }
         }
@@ -74,41 +67,24 @@ minecraft {
 
 sourceSets.main.resources.srcDir 'src/generated/resources'
 
-mixin {
-    add sourceSets.main, "aquifersbegone.common.refmap.json"
-
-    config "aquifersbegone.common.mixins.json"
-
-    debug.verbose = true
-    debug.export = true
-}
-
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-
-    annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+    minecraft "net.minecraftforge:forge:${common_minecraft_version}-${common_forge_version}"
 
     compileOnly project(":Common")
-    compileOnly project(":Forge")
-    compileOnly project(":Common-${minecraft_version}")
 }
 
 tasks.withType(JavaCompile) {
     source(project(":Common").sourceSets.main.allSource)
-    source(project(":Forge").sourceSets.main.allSource)
-    source(project(":Common-${minecraft_version}").sourceSets.main.allSource)
 }
 
 processResources {
     from project(":Common").sourceSets.main.resources
-    from project(":Forge").sourceSets.main.resources
-    from project(":Common-${minecraft_version}").sourceSets.main.resources
 
-    inputs.property "minecraft_version_constraint", minecraft_version_constraint
-    inputs.property "forge_version_constraint", forge_version_constraint
+    inputs.property "minecraft_version_constraint", common_forge_minecraft_version_constraint
+    inputs.property "forge_version_constraint", common_forge_version_constraint
 
     filesMatching("mods.toml") {
-        expand "minecraft_version_constraint": minecraft_version_constraint, "forge_version_constraint": forge_version_constraint
+        expand "minecraft_version_constraint": common_forge_minecraft_version_constraint, "forge_version_constraint": common_forge_version_constraint
     }
 }
 

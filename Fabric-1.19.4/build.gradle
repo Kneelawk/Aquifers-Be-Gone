@@ -6,6 +6,8 @@ plugins {
 
 archivesBaseName = "${mod_name}-fabric-${minecraft_version}"
 
+libsDirectory.set(new File(rootProject.buildDir, "libs"))
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
@@ -13,12 +15,15 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
     implementation project(":Common")
+    implementation project(path: ":Fabric", configuration: "namedElements")
     implementation project(":Common-${minecraft_version}")
 
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
 }
 
 loom {
+    mixin.defaultRefmapName = "aquifersbegone.common.refmap.json"
+
     runs {
         client {
             client()
@@ -38,6 +43,7 @@ loom {
 
 processResources {
     from project(":Common").sourceSets.main.resources
+    from project(":Fabric").sourceSets.main.resources
     from project(":Common-${minecraft_version}").sourceSets.main.resources
 
     inputs.property "version", project.version
@@ -50,6 +56,7 @@ processResources {
 
 tasks.withType(JavaCompile) {
     source(project(":Common").sourceSets.main.allSource)
+    source(project(":Fabric").sourceSets.main.allSource)
     source(project(":Common-${minecraft_version}").sourceSets.main.allSource)
 }
 

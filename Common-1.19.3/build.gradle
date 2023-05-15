@@ -6,6 +6,8 @@ plugins {
 
 archivesBaseName = "${mod_name}-common-${minecraft_version}"
 
+libsDirectory.set(new File(rootProject.buildDir, "libs"))
+
 minecraft {
     version(minecraft_version)
     runs {

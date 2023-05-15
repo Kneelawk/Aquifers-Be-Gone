@@ -4,37 +4,33 @@ plugins {
     id 'idea'
 }
 
-archivesBaseName = "${mod_name}-fabric-${minecraft_version}"
+archivesBaseName = "${mod_name}-fabric-common"
 
 libsDirectory.set(new File(rootProject.buildDir, "libs"))
 
 dependencies {
-    minecraft "com.mojang:minecraft:${minecraft_version}"
+    minecraft "com.mojang:minecraft:${common_minecraft_version}"
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${common_fabric_version}"
 
     implementation project(":Common")
-    implementation project(path: ":Fabric", configuration: "namedElements")
-    implementation project(":Common-${minecraft_version}")
 
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
 }
 
 loom {
-    mixin.defaultRefmapName = "aquifersbegone.common.refmap.json"
-
     runs {
         client {
             client()
             setConfigName("Fabric Client")
-            ideConfigGenerated(true)
+            ideConfigGenerated(false)
             runDir("run")
         }
         server {
             server()
             setConfigName("Fabric Server")
-            ideConfigGenerated(true)
+            ideConfigGenerated(false)
             runDir("run")
         }
     }
@@ -43,21 +39,17 @@ loom {
 
 processResources {
     from project(":Common").sourceSets.main.resources
-    from project(":Fabric").sourceSets.main.resources
-    from project(":Common-${minecraft_version}").sourceSets.main.resources
 
     inputs.property "version", project.version
-    inputs.property "minecraft_version_constraint", minecraft_version_constraint
+    inputs.property "minecraft_version_constraint", common_fabric_minecraft_version_constraint
 
     filesMatching("fabric.mod.json") {
-        expand "version": project.version, "minecraft_version_constraint": minecraft_version_constraint
+        expand "version": project.version, "minecraft_version_constraint": common_fabric_minecraft_version_constraint
     }
 }
 
 tasks.withType(JavaCompile) {
     source(project(":Common").sourceSets.main.allSource)
-    source(project(":Fabric").sourceSets.main.allSource)
-    source(project(":Common-${minecraft_version}").sourceSets.main.allSource)
 }
 
 publishing {
