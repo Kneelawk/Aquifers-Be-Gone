@@ -28,6 +28,8 @@ import net.minecraft.world.level.levelgen.carver.CarvingContext;
 import net.minecraft.world.level.levelgen.carver.CaveWorldCarver;
 import net.minecraft.world.level.levelgen.carver.WorldCarver;
 
+import com.kneelawk.aquifersbegone.platform.Services;
+
 @Mixin(WorldCarver.class)
 public abstract class WorldCarverMixin {
     @Shadow
@@ -57,7 +59,7 @@ public abstract class WorldCarverMixin {
                     return;
                 }
 
-                if (!state.getFluidState().isEmpty()) {
+                if (!state.getFluidState().isEmpty() && !(state.is(Blocks.LAVA) && Services.LOADER.lavaInCaves())) {
                     if (state.hasProperty(BlockStateProperties.WATERLOGGED)) {
                         state = state.setValue(BlockStateProperties.WATERLOGGED, false);
                     } else {

@@ -3,9 +3,9 @@ package com.kneelawk.aquifersbegone.platform;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 
-import com.kneelawk.aquifersbegone.platform.services.IPlatformHelper;
+import com.kneelawk.aquifersbegone.platform.services.IVersionPlatformHelper;
 
-public class ForgePlatformHelper implements IPlatformHelper {
+public class ForgeVersionPlatformHelper implements IVersionPlatformHelper {
 
     @Override
     public String getPlatformName() {

@@ -1,6 +1,6 @@
 package com.kneelawk.aquifersbegone.platform.services;
 
-public interface IPlatformHelper {
+public interface IVersionPlatformHelper {
 
     /**
      * Gets the name of the current platform
