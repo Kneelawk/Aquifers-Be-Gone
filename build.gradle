@@ -33,6 +33,10 @@ subprojects {
     }
 
     repositories {
+        maven {
+            name = 'Maven Central Other Mirror'
+            url = 'https://repo1.maven.org/maven2'
+        }
 
         mavenCentral()
 
